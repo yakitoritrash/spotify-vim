@@ -18,14 +18,18 @@ char *base64_encode(const char *data, size_t input_length) {
 
     b64 = BIO_new(BIO_f_base64());
     bio = BIO_new(BIO_s_mem());
-    bio = BIO_push(b64, bio);
-    BIO_write(bio, data, input_length);
-    BIO_flush(bio);
-    BIO_get_mem_ptr(bio, &buffer_ptr);
-    encoded_data = (char *)malloc(buffer_ptr->length);
-    memcpy(encoded_data, buffer_ptr->data, buffer_ptr->length - 1);
-    encoded_data[buffer_ptr->length - 1] = '\0';
-    BIO_free_all(bio);
+    b64 = BIO_push(b64, bio);
+
+    BIO_set_flags(b64, BIO_FLAGS_BASE64_NO_NL);  // important: no newlines
+    BIO_write(b64, data, input_length);
+    BIO_flush(b64);
+    BIO_get_mem_ptr(b64, &buffer_ptr);
+
+    encoded_data = (char *)malloc(buffer_ptr->length + 1); // +1 for null terminator
+    memcpy(encoded_data, buffer_ptr->data, buffer_ptr->length);
+    encoded_data[buffer_ptr->length] = '\0'; // properly null-terminate
+
+    BIO_free_all(b64);
     return encoded_data;
 }
 
@@ -55,6 +59,9 @@ void get_access_token(const char *code) {
         
         headers = curl_slist_append(headers, auth_header);
         headers = curl_slist_append(headers, "Content-Type: application/x-www-form-urlencoded");
+
+        curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, fwrite);
+        curl_easy_setopt(curl, CURLOPT_WRITEDATA, stdout);
 
         curl_easy_setopt(curl, CURLOPT_POST, 1L);
         curl_easy_setopt(curl, CURLOPT_URL, "https://accounts.spotify.com/api/token");
