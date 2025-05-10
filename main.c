@@ -19,7 +19,6 @@ void enable_raw_mode() {
 
   tcsetattr(STDIN_FILENO, TCSAFLUSH, &raw);
 }
-
 int main() {
   enable_raw_mode();
   printf("Spotify Vim Controller\n");
