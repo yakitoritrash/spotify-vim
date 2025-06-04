@@ -8,7 +8,7 @@
 struct termios orig_termios;
 
 // Spotify access token and API URL
-const char *ACCESS_TOKEN = "your access token here"; // Replace with your actual access token
+const char *ACCESS_TOKEN = "YOUR TOKEN HERE"; // Replace with your actual access token
 const char *BASE_URL = "https://api.spotify.com/v1/me/player";
 
 // Function to disable raw mode
