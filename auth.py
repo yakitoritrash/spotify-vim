@@ -4,9 +4,9 @@ import json
 import base64
 
 # Replace with your own details
-CLIENT_ID = '6e73370bdfd84ccba9c2da88d32d1211'
-CLIENT_SECRET = '64066a67b6704a478d69bfa1087609f1'
-REFRESH_TOKEN = 'AQAStcLtN-1BrirEi5JkmDM8rXiSzsiXrGspKab5WwEUniZuw2eaBBylHcBXGaHRPHq6y-VhNX0iqk7OawCvDEVajXu6yePkyIgZe6SCP5eEdh2yuq5o2M9oCWqAmi3O28k'
+CLIENT_ID = 'your_client_id'
+CLIENT_SECRET = 'your_client_secret'
+REFRESH_TOKEN = 'insert_refresh_token'
 TOKEN_URL = 'https://accounts.spotify.com/api/token'
 
 # Store the token and expiration time
